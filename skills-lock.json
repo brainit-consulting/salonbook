@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "security-scanner": {
+      "source": "brainit-consulting/skills",
+      "sourceType": "github",
+      "skillPath": "security-scanner/SKILL.md",
+      "computedHash": "ae77fad5b4788c7c83a521a2e0a8205e755c1df0b1e7800c0036fbfbf62caeca"
+    },
+    "start-an-app": {
+      "source": "brainit-consulting/skills",
+      "sourceType": "github",
+      "skillPath": "start-an-app/SKILL.md",
+      "computedHash": "3dadb60308ee64a5fcebdfbca5ae533ee6414a5b2bb3b1b2bae612eb757c59bf"
+    }
+  }
+}

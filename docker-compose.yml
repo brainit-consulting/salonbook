@@ -1,0 +1,16 @@
+# Local database for salonbook only. Host port 5434 so it stays clear of
+# other Postgres containers on this machine.
+name: salonbook
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: salon
+      POSTGRES_PASSWORD: salon
+      POSTGRES_DB: salonbook
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+volumes:
+  pgdata:
