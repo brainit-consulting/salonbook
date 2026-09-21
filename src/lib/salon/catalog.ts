@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { services, stylistServices, stylists, timeOff, workingHours } from "@/lib/db/schema";
 import { logActivity } from "@/lib/activity";
 import { SalonError } from "./errors";
+import { isId } from "./ids";
 
 // Services, stylists, weekly hours and days off. Pages and agent tools both
 // come through here, so there is one set of rules.
@@ -22,6 +23,7 @@ export async function listServices(opts: { includeInactive?: boolean } = {}): Pr
 }
 
 export async function getService(id: string): Promise<Service | null> {
+  if (!isId(id)) return null;
   const [row] = await db.select().from(services).where(eq(services.id, id));
   return row ?? null;
 }
@@ -87,6 +89,7 @@ export async function createService(input: ServiceInput, userId: string) {
 
 export async function updateService(id: string, input: ServiceInput, userId: string) {
   checkService(input);
+  if (!isId(id)) throw new SalonError("not_found", "That service doesn't exist.");
   const [row] = await db
     .update(services)
     .set({ ...input, name: input.name.trim() })
@@ -99,6 +102,7 @@ export async function updateService(id: string, input: ServiceInput, userId: str
 
 /** Hides a service from booking. Past bookings keep pointing at it. */
 export async function setServiceActive(id: string, active: boolean, userId: string) {
+  if (!isId(id)) throw new SalonError("not_found", "That service doesn't exist.");
   const [row] = await db.update(services).set({ active }).where(eq(services.id, id)).returning();
   if (!row) throw new SalonError("not_found", "That service doesn't exist.");
   await logActivity(
@@ -134,6 +138,7 @@ export async function updateStylist(id: string, input: StylistInput, userId: str
 
 /** Takes a stylist off the booking pages. Their past bookings stay in the diary. */
 export async function setStylistActive(id: string, active: boolean, userId: string) {
+  if (!isId(id)) throw new SalonError("not_found", "That stylist doesn't exist.");
   const [row] = await db.update(stylists).set({ active }).where(eq(stylists.id, id)).returning();
   if (!row) throw new SalonError("not_found", "That stylist doesn't exist.");
   await logActivity(
@@ -145,6 +150,8 @@ export async function setStylistActive(id: string, active: boolean, userId: stri
 }
 
 async function setStylistServices(stylistId: string, serviceIds: string[]) {
+  if (!isId(stylistId)) throw new SalonError("not_found", "That stylist doesn't exist.");
+  if (!serviceIds.every(isId)) throw new SalonError("invalid", "One of those services doesn't exist.");
   await db.delete(stylistServices).where(eq(stylistServices.stylistId, stylistId));
   const unique = [...new Set(serviceIds)];
   if (unique.length) {
@@ -197,6 +204,7 @@ export async function addTimeOff(
 }
 
 export async function removeTimeOff(id: string, userId: string) {
+  if (!isId(id)) throw new SalonError("not_found", "That time off doesn't exist.");
   const [row] = await db.delete(timeOff).where(eq(timeOff.id, id)).returning();
   if (!row) throw new SalonError("not_found", "That time off doesn't exist.");
   await logActivity("time_off.removed", { stylistId: row.stylistId, timeOffId: id }, userId);

@@ -6,6 +6,7 @@ import { logActivity } from "@/lib/activity";
 import { getFreeSlots } from "./availability";
 import { salon } from "./config";
 import { SalonError } from "./errors";
+import { isId } from "./ids";
 import { notifyBooked, notifyCancelled } from "./notify";
 import { dayOf } from "./time";
 
@@ -42,6 +43,7 @@ function flatten(row: DetailRow): BookingDetail {
 }
 
 export async function getBooking(id: string): Promise<BookingDetail | null> {
+  if (!isId(id)) return null;
   const [row] = await detailQuery().where(eq(bookings.id, id));
   return row ? flatten(row) : null;
 }
@@ -61,6 +63,7 @@ export async function listBookings(opts: {
   includeCancelled?: boolean;
   limit?: number;
 }): Promise<BookingDetail[]> {
+  if (opts.stylistId !== undefined && !isId(opts.stylistId)) return [];
   const rows = await detailQuery()
     .where(
       and(
