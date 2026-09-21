@@ -279,6 +279,8 @@ export function describeChange(action: string, detail: unknown, ownerName: strin
       return `Time off added${str(d.stylistName) ? ` for ${str(d.stylistName)}` : ""} ${by}`;
     case "time_off.removed":
       return `Time off removed${str(d.stylistName) ? ` for ${str(d.stylistName)}` : ""} ${by}`;
+    case "connection.revoked":
+      return `AI agent access revoked ${by}`;
     case "email.sent_again":
       return `Email sent again: ${str(d.subject) ?? "a saved message"} ${by}`;
     default:

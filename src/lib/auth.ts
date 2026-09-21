@@ -10,13 +10,16 @@ import { count } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { user as userTable } from "./db/auth-schema";
 import { sendEmail } from "@/lib/email";
-import { MCP_RESOURCE, MCP_SCOPES } from "@/lib/mcp-resource";
+import { BASE_URL, MCP_RESOURCE, MCP_SCOPES } from "@/lib/mcp-resource";
 import VerifyEmail from "@/emails/verify-email";
 import ResetPassword from "@/emails/reset-password";
 import ConfirmDelete from "@/emails/confirm-delete";
 
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  // BASE_URL falls back to localhost when the setting is missing or empty. The
+  // agent-access plugins need a real address at start-up; without one every
+  // owner page answered 500 (measured). The System page reports the gap instead.
+  baseURL: BASE_URL,
   database: drizzleAdapter(db, { provider: "pg" }),
 
   emailAndPassword: {
