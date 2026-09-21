@@ -3,7 +3,7 @@
 export const legal = {
   appName: "Pepper Tree Hair",
   entity: null as string | null, // the person or company that operates it
-  contactEmail: null as string | null, // where privacy requests go
+  contactEmail: "dutoit.emile@gmail.com" as string | null, // where privacy requests go
   jurisdiction: null as string | null, // whose law governs any terms
   lastUpdated: "2026-09-21", // moves when the page does
 };

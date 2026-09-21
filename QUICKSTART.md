@@ -8,7 +8,7 @@ waiting for the install.
 - **Docker Desktop is running.** The salon's data lives in a Postgres database that
   runs in Docker.
 - **Node 22 and pnpm** are installed. Check with `node --version` and `pnpm --version`.
-- **GitHub CLI is signed in** (`gh auth status`). The repo is private.
+- **Git** is installed. The repo is public, so no sign-in is needed to clone it.
 
 ## 1. Clone it into a new folder on H:
 
@@ -16,7 +16,7 @@ In PowerShell:
 
 ```powershell
 cd H:\
-gh repo clone brainit-consulting/salonbook salonbook-demo
+git clone https://github.com/brainit-consulting/salonbook.git salonbook-demo
 cd H:\salonbook-demo
 ```
 
