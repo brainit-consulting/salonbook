@@ -7,5 +7,5 @@ export const siteUrl = (
 export const site = {
   name: "Pepper Tree Hair",
   description:
-    "Book a cut, colour or blow-dry at Pepper Tree Hair. Pick a service, a stylist and a time.",
+    "Book a cut, color or blow-dry at Pepper Tree Hair. Pick a service, a stylist and a time.",
 };

@@ -32,7 +32,7 @@ const SERVICES = {
   kidsCut: { name: "Kids' cut", durationMinutes: 30, priceCents: 2600 },
   blowDry: { name: "Blow-dry", durationMinutes: 45, priceCents: 4700 },
   rootTouchUp: { name: "Root touch-up", durationMinutes: 75, priceCents: 9200 },
-  fullColour: { name: "Full colour", durationMinutes: 120, priceCents: 14500 },
+  fullColour: { name: "Full color", durationMinutes: 120, priceCents: 14500 },
   highlights: { name: "Partial highlights", durationMinutes: 105, priceCents: 13800 },
   conditioning: { name: "Deep conditioning treatment", durationMinutes: 30, priceCents: 3400 },
 } as const;
